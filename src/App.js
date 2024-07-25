@@ -2,9 +2,10 @@ import React from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Mymoves from './pages/Mymoves';
-import Reports from './pages/Reports';
-import Products from './pages/Products';
+import Mymoves from './pages/Mymoves.tsx';
+import MyProfile from './pages/MyProfile.tsx';
+import GetQuote from './pages/GetQuote.tsx';
+import LogOut from './pages/LogOut.tsx';
 
 function App() {
   return (
@@ -13,8 +14,9 @@ function App() {
         <Navbar />
         <Switch>
           <Route path='/' exact component={Mymoves} />
-          <Route path='/reports' component={Reports} />
-          <Route path='/products' component={Products} />
+          <Route path='/myprofile' component={MyProfile} />
+          <Route path='/getquotes' component={GetQuote} />
+          <Route path='/logout' component={LogOut} />
         </Switch>
       </Router>
     </>

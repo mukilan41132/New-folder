@@ -1,33 +1,41 @@
 import React, { useState } from 'react';
-import * as FaIcons from 'react-icons/fa';
-import * as AiIcons from 'react-icons/ai';
-
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { SidebarData } from './SidebarData';
-import './Navbar.css';
 import { IconContext } from 'react-icons';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import './Navbar.css';
 
 function Navbar() {
   const [sidebar, setSidebar] = useState(false);
+  const [activeItem, setActiveItem] = useState('');
 
   const showSidebar = () => setSidebar(!sidebar);
+
+  const handleItemClick = (item) => {
+    setActiveItem(item); // Update active item based on path or unique identifier
+    if (sidebar) {
+      showSidebar(); // Close sidebar on item click if sidebar is open
+    }
+  };
 
   return (
     <>
       <IconContext.Provider value={{ color: 'black' }}>
-        <nav className={'nav-menu active'}>
-          <ul className='nav-menu-items' onClick={showSidebar}>
-           
-            {SidebarData.map((item, index) => {
-              return (
-                <li key={index} className={item.cName}>
-                  <Link to={item.path}>
-                    {item.icon}
-                    <span className='spans'>{item.title}</span>
-                  </Link>
-                </li>
-              );
-            })}
+        <GiHamburgerMenu onClick={showSidebar} />
+        <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
+          <ul className='nav-menu-items'>
+            {SidebarData.map((item, index) => (
+              <li key={index} className={activeItem === item.path ? item.cName : 'nav-text1'}>
+                <NavLink
+                  to={item.path}
+                  activeClassName='active'
+                  onClick={() => handleItemClick(item.path)}
+                >
+                  {item.icon}
+                  <span className='spans'>{item.title}</span>
+                </NavLink>
+              </li>
+            ))}
           </ul>
         </nav>
       </IconContext.Provider>

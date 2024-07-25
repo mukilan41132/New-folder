@@ -1,36 +1,34 @@
 import React from 'react';
-import * as FaIcons from 'react-icons/fa';
-import { FaTruckMoving } from "react-icons/fa";
-import { BsFillPersonFill } from "react-icons/bs";
 import { BsFileEarmarkText } from "react-icons/bs";
 import { RiLogoutCircleLine } from "react-icons/ri";
-import * as AiIcons from 'react-icons/ai';
-import * as IoIcons from 'react-icons/io';
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTruckArrowRight, faUser } from "@fortawesome/free-solid-svg-icons";
+import priceListImage from './../images/financial_8705655.svg';
+import logOutImage from './../images/logOut.svg';
 
 export const SidebarData = [
   {
     title: 'MY MOVES',
     path: '/',
-    icon: <FaTruckMoving />,
+    icon: <FontAwesomeIcon icon={faTruckArrowRight} className='iconTruckRange'/>,
     cName: 'nav-text'
   },
   {
-    title: 'PROFILE',
-    path: '/reports',
-    icon: <BsFillPersonFill />,
+    title: 'MY PROFILE',
+    path: '/myprofile',
+    icon: <FontAwesomeIcon icon={faUser} className='iconRange'/>,
     cName: 'nav-text'
   },
   {
     title: 'GET QUOTE',
-    path: '/products',
-    icon: <BsFileEarmarkText />,
+    path: '/getquotes',
+    icon: <img src={priceListImage} className='iconTruckRange'/>,
     cName: 'nav-text'
   },
   {
     title: 'LOGOUT',
-    path: '/team',
-    icon: <RiLogoutCircleLine />,
+    path: '/logout',
+    icon: <img src={logOutImage} className='iconRange'/>,
     cName: 'nav-text'
   }
 ];
