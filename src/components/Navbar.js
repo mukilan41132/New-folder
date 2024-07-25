@@ -25,9 +25,11 @@ function Navbar() {
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
           <ul className='nav-menu-items'>
             {SidebarData.map((item, index) => (
-              <li key={index} className={activeItem === item.path ? item.cName : 'nav-text1'}>
+              <li key={index} className={`${activeItem === item.path ? item.cName ? "borderline" : '' : 'active-tab'}`}
+              >
                 <NavLink
                   to={item.path}
+
                   activeClassName='active'
                   onClick={() => handleItemClick(item.path)}
                 >

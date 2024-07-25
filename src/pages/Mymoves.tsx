@@ -18,59 +18,59 @@ const Mymoves: React.FC = () => {
   const [fetchData, setFetchData] = useState<any>(null);
   const [expandIcon, setExpandIcon] = useState(false);
 
-  const handleExpandChange = () =>{
+  const handleExpandChange = () => {
     setExpandIcon(!expandIcon);
   }
 
-  const handleCheckChange = (event:React.ChangeEvent<HTMLInputElement>) =>{
-    if(fetchData !== null){
-      const newValue = event.target.checked ? event.target.value : null; 
+  const handleCheckChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (fetchData !== null) {
+      const newValue = event.target.checked ? event.target.value : null;
       setFetchData({ ...fetchData, move_date_flexible: newValue });
     }
   }
   useEffect(() => {
-    const fetchLedgerData = async () => {      
-        fetch('/api_assignment.json')
+    const fetchLedgerData = async () => {
+      fetch('/api_assignment.json')
         .then(response => response.json())
-        .then(data =>{
-         setFetchData(data);    
+        .then(data => {
+          setFetchData(data);
         })
         .catch(error => console.error('Error fetching data:', error));
     };
     fetchLedgerData();
   }, []);
- 
+
   return (
-    
+
     <div className='home'>
       {fetchData !== null &&
-      <div className='maincontainer'>
-        <h6 className='titleText'>My Moves</h6>
-       <Shipping_Location fetchData={fetchData} />
-       <Shipping_Info fetchData={fetchData} onClick={handleExpandChange} onChange={handleCheckChange}/>
-        <Disclaimer expandIcon={expandIcon}/>
-        {expandIcon ?<> <InventoryTitle />
-        {fetchData.items !== null  ?
-        (fetchData.items.rooms !== null && fetchData.items.rooms !== undefined && fetchData.items.rooms.length>0 ? 
-        fetchData.items.rooms.map((category,i) => (                                 
-        <div style={{marginTop: i!==0 ? '-14px':'0px'}}>
-          <Accordion sx={{ width: "100%", backgroundColor: "#e8e8e8" }}>
-          <Accordion_Summary categoryRoomName={category.roomName} fetchData={fetchData.items.rooms}/>
-  <AccordionDetails sx={{ backgroundColor: "white", display:'flex'}}>
-  {category.hasCategory === true ? category.categories !== null && category.categories !== undefined &&  category.categories.filter(item => item !== null) && category.categories.map((n, m) => (
-    <WithCategories fetchData={n}/>
-  )):category.hasCategory === false ? category.categories === null || category.categories === undefined && category.hasCategory === false && 
-    <WithOutCategories fetchData={category} />
-  :<></>} 
-  </AccordionDetails>
-          </Accordion>         
+        <div className='maincontainer'>
+          <h6 className='titleText'>My Moves</h6>
+          <Shipping_Location fetchData={fetchData} />
+          <Shipping_Info fetchData={fetchData} onClick={handleExpandChange} onChange={handleCheckChange} />
+          <Disclaimer expandIcon={expandIcon} />
+          {expandIcon ? <> <InventoryTitle />
+            {fetchData.items !== null ?
+              (fetchData.items.rooms !== null && fetchData.items.rooms !== undefined && fetchData.items.rooms.length > 0 ?
+                fetchData.items.rooms.map((category, i) => (
+                  <div style={{ marginTop: i !== 0 ? '-14px' : '0px' }}>
+                    <Accordion sx={{ width: "100%", backgroundColor: "#e8e8e8" }}>
+                      <Accordion_Summary categoryRoomName={category.roomName} fetchData={fetchData.items.rooms} />
+                      <AccordionDetails sx={{ backgroundColor: "white", display: 'flex' }}>
+                        {category.hasCategory === true ? category.categories !== null && category.categories !== undefined && category.categories.filter(item => item !== null) && category.categories.map((n, m) => (
+                          <WithCategories fetchData={n} />
+                        )) : category.hasCategory === false ? category.categories === null || category.categories === undefined && category.hasCategory === false &&
+                          <WithOutCategories fetchData={category} />
+                          : <></>}
+                      </AccordionDetails>
+                    </Accordion>
+                  </div>
+                )) : <></>
+              ) : <></>}<HouseDetailsTitle />
+            <ExistingHouseDetails fetchData={fetchData} />
+            <NewHouseDetails fetchData={fetchData} /></> : <></>}
         </div>
-       )):<></> 
-      ):<></>}<HouseDetailsTitle /> 
-      <ExistingHouseDetails fetchData={fetchData}/>
-      <NewHouseDetails fetchData={fetchData}/></>:<></>}
-      </div>
-}
+      }
     </div>
   );
 }
